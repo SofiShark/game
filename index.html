@@ -7,14 +7,20 @@
 </head>
 <body>
     <div class="main">
-        <div class="menu">
+        <div id="menu" class="menu">
             <p class="title">Menu</p>
             <label>Choose control type:</label>
             <select id="control-type">
                 <option value="keyboard" selected>Keyboard</option>
                 <option value="mouse">Mouse</option>
             </select>
-            <button id="start-game">Start game</button>
+            <button id="start-game" class="btn">Start game</button>
+        </div>
+        <canvas id="game"></canvas>
+        <div id="result" class="menu">
+            <p id="result-title" class="title">Defeat</p>
+            <p id="result-score">Score: <span>123</span></p>
+            <button id="to-menu" class="btn">Back to menu</button>
         </div>
     </div>
 </body>
