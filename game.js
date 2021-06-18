@@ -21,11 +21,11 @@ window.addEventListener('resize', e => {
 
 
 const me = new Sobakai()
+const enemies = []
 
-setInterval(update, 5)
+setInterval(update, 10)
 
 window.addEventListener('keydown', e => {
-  console.log(e)
   keys[e.code] = 1
 })
 
@@ -33,19 +33,17 @@ window.addEventListener('keyup', e => {
   keys[e.code] = 0
 })
 
-
-function clear() {
-  ctx.clearRect(0, 0, cnv.width, cnv.height);
+function startGame() {
+  newWave()
 }
 
-function drawBg() {
-  bg.height = height
-  ctx.drawImage(bg, 0, 0);
+function newWave() {
+  enemies.push(new Enemy(10, 10, 80, 80, 2, 0.5, 3, '/images/enemy1.png'))
 }
 
 function update() {
-  clear()
-  drawBg()
+  clear(ctx)
+  drawBg(ctx)
 
   if (keys.KeyD && keys.KeyA) {
     me.setMove(0)
@@ -61,12 +59,8 @@ function update() {
     me.shoot()
   }
 
-  me.move()
-  me.draw(ctx)
-  // if (me.bullets.length)
-  //   console.log(me.bullets)
-  // me.bullets.forEach(el => {
-  //   el.move()
-  //   el.draw(ctx)
-  // })
+  me.update(ctx)
+  enemies.forEach(el => {
+    el.update(ctx)
+  })
 }

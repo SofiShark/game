@@ -28,5 +28,6 @@ window.addEventListener('keydown', function(e) {
 start_game.forEach(el => {
   el.addEventListener('click', function() {
     openGame()
+    startGame()
   })
 })
