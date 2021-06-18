@@ -7,21 +7,28 @@
 </head>
 <body>
     <div class="main">
-        <div id="menu" class="menu">
-            <p class="title">Menu</p>
-            <label>Choose control type:</label>
-            <select id="control-type">
-                <option value="keyboard" selected>Keyboard</option>
-                <option value="mouse">Mouse</option>
-            </select>
-            <button id="start-game" class="btn">Start game</button>
+        <div id="menu" class="menu" >
+            <div class="menu__inner">
+                <p class="title">Menu</p>
+                <label>Choose control type:
+                    <select id="control-type">
+                        <option value="keyboard" selected>Keyboard</option>
+                        <option value="mouse">Mouse</option>
+                    </select>
+                </label>
+                <button id="start-game" class="btn big">Start game</button>
+            </div>
         </div>
-        <canvas id="game"></canvas>
-        <div id="result" class="menu">
-            <p id="result-title" class="title">Defeat</p>
-            <p id="result-score">Score: <span>123</span></p>
-            <button id="to-menu" class="btn">Back to menu</button>
+        <canvas id="game" hidden></canvas>
+        <div id="result" class="menu" hidden>
+            <div class="menu__inner">
+                <p id="result-title" class="title">Defeat</p>
+                <p id="result-score">Score: <span>123</span></p>
+                <button id="restart-game" class="btn big">Restart</button>
+                <button id="to-menu" class="btn">Back to menu</button>
+            </div>
         </div>
     </div>
+    <script src="index.js"></script>
 </body>
 </html>

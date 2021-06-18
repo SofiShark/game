@@ -42,6 +42,15 @@ body {
   box-shadow: 0 0 6px rgba(0,0,0,0.3);
 }
 
+.menu__inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
 .title {
   font-weight: bold;
 }
@@ -53,7 +62,6 @@ body {
 }
 
 .btn {
-  margin: auto;
   padding: 0.5em 1em;
   display: block;
   color: #fff;
@@ -64,22 +72,10 @@ body {
   cursor: pointer;
 }
 
-#start-game {
+.big {
   font-size: 24px;
 }
 
 #canvas {
   display: none;
-}
-
-#result {
-
-}
-
-#result-title {
-  
-}
-
-#to-menu {
-  
 }
