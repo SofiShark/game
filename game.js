@@ -22,6 +22,7 @@ window.addEventListener('resize', e => {
 
 const me = new Sobakai()
 const enemies = []
+let wave = 3
 
 setInterval(update, 10)
 
@@ -38,7 +39,19 @@ function startGame() {
 }
 
 function newWave() {
-  enemies.push(new Enemy(10, 10, 80, 80, 2, 0.5, 3, '/images/enemy1.png'))
+  wave++
+
+  if (wave > 4) {
+    return enemies.push(new Enemy((width - 160) / 2, 0, 160, 160, 0.4, 0, 30, '/images/enemy3.png', true))
+  }
+
+  for (let i = 0; i < wave; i++) {
+    const enemy = (Math.random() <= 0.5)
+      ? new Enemy(Math.random() * (width - 80), -90, 80, 80, 2, 0.4, 2, '/images/enemy1.png', true)
+      : new Enemy(Math.random() * (width - 95), -100, 95, 95, 4, 1, 3, '/images/enemy2.png', false)
+
+    enemies.push(enemy)
+  }
 }
 
 function update() {

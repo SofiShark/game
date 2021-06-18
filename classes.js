@@ -39,6 +39,8 @@ class Sobakai {
   }
 
   move() {
+    if (this.x < -this.w / 2 && this.direction == -1) return 
+    if (this.x > width - this.w / 2 - 10 && this.direction == 1) return
     this.dx += this.direction * 3
     this.x = (width - this.w) / 2 + this.dx
   }
@@ -80,7 +82,7 @@ class Bullet {
 }
 
 class Enemy {
-  constructor (x, y, w, h, dx, dy, hp, image) {
+  constructor (x, y, w, h, dx, dy, hp, image, can_shoot) {
     this.x = x
     this.y = y
     this.w = w
@@ -92,7 +94,7 @@ class Enemy {
     this.image.src = image
     this.direction = 1
 
-    this.can_shoot = true
+    this.can_shoot = can_shoot
     this.bullets = []
   }
 
@@ -101,10 +103,14 @@ class Enemy {
     this.move()
     this.draw(ctx)
     this.shoot()
+
+    this.bullets.forEach(el => {
+      el.update(ctx)
+    })
   }
 
   setMove() {
-    if (this.x == 0 || this.x == width - this.w) 
+    if (this.x < 0 || this.x > width - this.w) 
       return this.direction = -this.direction
 
     if (Math.random() < 0.01)
@@ -117,22 +123,24 @@ class Enemy {
   }
 
   shoot() {
-    const rand = Math.random()
     if (!this.can_shoot) return
-    if (rand > 0.5) return
+
+    const rand = Math.random()
+    if (rand > 0.1) return
 
     const color = '#8a2bd6'
 
     if (rand == 0) {
-      this.bullets.push(new Bullet(this.x + this.w / 2, this.y + 25, 10, 15, 3, color))
+      this.bullets.push(new Bullet(this.x + 30 + this.w / 2, this.y + 25, 10, 15, 3, color))
     }
     this.bullets.push(new Bullet(this.x + this.w / 2, this.y + 25, 10, 15, 3, color))
     this.can_shoot = false
-    setTimeout(() => this.can_shoot = true, 600)
+    setTimeout(() => this.can_shoot = true, 1000)
   }
 
   draw(ctx) {
-    ctx.shadowBlur = 0
+    ctx.shadowColor = "#eb7bf3"
+    ctx.shadowBlur = 10
     ctx.drawImage(this.image, this.x, this.y, this.w, this.h)
   }
 }
