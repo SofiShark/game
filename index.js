@@ -1,41 +1,32 @@
-const game = document.querySelector('#game'),
-      main_menu = document.querySelector('#menu'),
-      finish_menu = document.querySelector('#result'),
-      start_game = document.querySelector('#start-game'),
-      restart_game = document.querySelector('#restart-game'),
-      back_to_menu = document.querySelector('#to-menu')
-
-game.height = document.clientHeight
-game.width = document.clientWidth
+const main_menu = $('#menu'),
+      finish_menu = $('#result'),
+      start_game = $$('#start-game'),
+      back_to_menu = $('#to-menu'),
+      canvas = $('#canvas')
 
 function openMainMenu() {  
   main_menu.hidden = false
   finish_menu.hidden = true
-  game.hidden = true
 }
 function openFinishMenu() {  
   main_menu.hidden = true
   finish_menu.hidden = false
-  game.hidden = true
 }
 function openGame() {  
   main_menu.hidden = true
   finish_menu.hidden = true
-  game.hidden = false
 }
 
 window.addEventListener('keydown', function(e) {
-  switch (e.key) {
+  switch (e.code) {
     case "Escape":
-      if (!game.hidden) openMainMenu()
+      if (!canvas.hidden) openMainMenu()
       break
   }
 })
 
-start_game.addEventListener('click', function() {
-  openGame()
-})
-
-restart_game.addEventListener('click', function() {
-  openGame()
+start_game.forEach(el => {
+  el.addEventListener('click', function() {
+    openGame()
+  })
 })
