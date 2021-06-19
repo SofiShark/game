@@ -3,8 +3,8 @@ const $$ = (selector) => document.querySelectorAll(selector)
 
 class Sobakai {
   constructor () {
-    this.w = 120
-    this.h = 140
+    this.w = 90
+    this.h = 120
     this.dx = 0
     this.x = (width - this.w) / 2 + this.dx
     this.y = height - this.h
@@ -19,13 +19,33 @@ class Sobakai {
     this.image.src = '/images/sobakai.png'
   }
 
-  update(ctx) {
+  update(ctx, enemies) {
     this.move()
     this.draw(ctx)
+
     if (this.bullets[0]?.y < -this.bullets[0]?.h)
       delete this.bullets.shift()
-    this.bullets.forEach(el => {
-      el.update(ctx)
+    this.bullets.forEach((bullet, idx) => {
+      bullet.update(ctx)
+
+      enemies.some(enemy => {
+        if (bullet.collision(enemy.getCollision())) {
+          this.bullets = this.bullets.slice(0, idx).concat(this.bullets.slice(idx + 1))
+          enemy.damage()
+          return true
+        }
+        return false
+      })
+    })
+
+    enemies.forEach(enemy => {
+      if (this.collision(enemy.getCollision()))
+        return this.damage(enemies)
+
+      enemy.bullets.forEach(bullet => {
+        if (this.collision(bullet.getCollision()))
+          return this.damage(enemies)
+      })
     })
   }
 
@@ -51,6 +71,31 @@ class Sobakai {
     this.bullets.push(new Bullet(this.x + this.w / 2, this.y + 25, 10, 15, -3, '#4af531'))
     this.can_shoot = false
     setTimeout(() => this.can_shoot = true, 300)
+  }
+
+  getCollision() {
+    return [
+      [this.x,                    this.y], 
+      [this.x + this.w,           this.y + this.h],
+      [this.x + this.h,           this.y + this.w],
+      [this.x + this.w + this.h,  this.y + this.w + this.h]
+    ]
+  }
+
+  collision(pairs) {
+    const [x1, y1] = pairs[0]
+    const [x2, y2] = pairs[1]
+    const [x3, y3] = pairs[2]
+    const [x4, y4] = pairs[3]
+    for (let [x0, y0] of this.getCollision())
+      if ((x0 >= x1 && y0 >= y1) && (x0 >= x3 && y0 <= y3) && (x0 <= x2 && y0 >= y2) && (x0 <= x4 && y0 <= y4))
+        return true
+
+    return false
+  }
+
+  damage() {
+    console.log('sobakai damaged')
   }
 }
 
@@ -79,6 +124,27 @@ class Bullet {
     ctx.shadowBlur = 6
     ctx.fillRect(this.x, this.y, this.w, this.h)
   }
+
+  getCollision() {
+    return [
+      [this.x,                    this.y], 
+      [this.x + this.w,           this.y + this.h],
+      [this.x + this.h,           this.y + this.w],
+      [this.x + this.w + this.h,  this.y + this.w + this.h]
+    ]
+  }
+
+  collision(pairs) {
+    const [x1, y1] = pairs[0]
+    const [x2, y2] = pairs[1]
+    const [x3, y3] = pairs[2]
+    const [x4, y4] = pairs[3]
+    for (let [x0, y0] of this.getCollision())
+      if ((x0 >= x1 && y0 >= y1) && (x0 >= x3 && y0 <= y3) && (x0 <= x2 && y0 >= y2) && (x0 <= x4 && y0 <= y4))
+        return true
+
+    return false
+  }
 }
 
 class Enemy {
@@ -104,8 +170,10 @@ class Enemy {
     this.draw(ctx)
     this.shoot()
 
-    this.bullets.forEach(el => {
-      el.update(ctx)
+    if (this.bullets.length && this.bullets[0].y > height) 
+      delete this.bullets.shift()
+    this.bullets.forEach(bullet => {
+      bullet.update(ctx)
     })
   }
 
@@ -143,12 +211,17 @@ class Enemy {
     ctx.shadowBlur = 10
     ctx.drawImage(this.image, this.x, this.y, this.w, this.h)
   }
-}
 
-function clear(ctx) {
-    ctx.clearRect(0, 0, cnv.width, cnv.height);
+  getCollision() {
+    return [
+      [this.x,                    this.y], 
+      [this.x + this.w,           this.y + this.h],
+      [this.x + this.h,           this.y + this.w],
+      [this.x + this.w + this.h,  this.y + this.w + this.h]
+    ]
   }
-  
-  function drawBg(ctx) {
-    ctx.drawImage(bg, 0, 0);
+
+  damage() {
+    console.log('enemy damaged')
   }
+}
