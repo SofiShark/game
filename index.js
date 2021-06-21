@@ -1,19 +1,19 @@
 const main_menu = $('#menu'),
       finish_menu = $('#result'),
-      start_game = $$('#start-game'),
+      start_game = $$('.start-game'),
       back_to_menu = $('#to-menu'),
       canvas = $('#canvas')
 
-function openMainMenu() {  
+function openMainMenu() {
   main_menu.hidden = false
   finish_menu.hidden = true
   resetGame()
 }
-function openFinishMenu() {  
+function openFinishMenu() {
   main_menu.hidden = true
   finish_menu.hidden = false
 }
-function openGame() {  
+function openGame() {
   main_menu.hidden = true
   finish_menu.hidden = true
 }
