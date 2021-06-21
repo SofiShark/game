@@ -7,6 +7,7 @@ const main_menu = $('#menu'),
 function openMainMenu() {  
   main_menu.hidden = false
   finish_menu.hidden = true
+  resetGame()
 }
 function openFinishMenu() {  
   main_menu.hidden = true
@@ -30,4 +31,8 @@ start_game.forEach(el => {
     openGame()
     startGame()
   })
+})
+
+back_to_menu.addEventListener('click', function() {
+  openMainMenu()
 })
