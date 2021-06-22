@@ -16,7 +16,7 @@ class Sobakai {
     this.can_shoot = true
     this.bullets = []
     this.image = new Image()
-    this.image.src = '/images/sobakai.png'
+    this.image.src = 'images/sobakai.png'
   }
 
   update(ctx) {

@@ -21,7 +21,7 @@ function openGame() {
 window.addEventListener('keydown', function(e) {
   switch (e.code) {
     case "Escape":
-      if (!canvas.hidden) openMainMenu()
+      openMainMenu()
       break
   }
 })

@@ -7,7 +7,7 @@ const keys = {}
 const cnv = $('#canvas')
 const ctx = cnv.getContext('2d')
 const bg = new Image()
-bg.src = '/images/fon.jpg'
+bg.src = 'images/fon.jpg'
 
 
 Array.prototype.delete = function(idx) {
@@ -75,13 +75,13 @@ function newWave() {
   wave++
 
   if (wave > 4) {
-    return enemies.push(new Enemy((width - 160) / 2, 0, 200, 160, 0.7, 0, 30, '/images/enemy3.png', true))
+    return enemies.push(new Enemy((width - 160) / 2, 0, 200, 160, 0.7, 0, 30, 'images/enemy3.png', true))
   }
 
   for (let i = 0; i < wave; i++) {
     const enemy = (Math.random() <= 0.5)
-      ? new Enemy(Math.random() * (width - 80), -90, 100, 80, 3, 0.6, 2, '/images/enemy1.png', true)
-      : new Enemy(Math.random() * (width - 95), -100, 120, 95, 5, 1.2, 3, '/images/enemy2.png', false)
+      ? new Enemy(Math.random() * (width - 80), -90, 100, 80, 3, 0.6, 2, 'images/enemy1.png', true)
+      : new Enemy(Math.random() * (width - 95), -100, 120, 95, 5, 1.2, 3, 'images/enemy2.png', false)
 
     enemies.push(enemy)
   }
